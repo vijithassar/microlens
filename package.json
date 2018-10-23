@@ -1,5 +1,5 @@
 {
-  "name": "ulens",
+  "name": "microlens",
   "version": "0.1.0",
   "description": "usable functional programming lenses for JavaScript",
   "main": "index.js",
