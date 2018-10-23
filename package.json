@@ -1,0 +1,26 @@
+{
+  "name": "ulens",
+  "version": "0.1.0",
+  "description": "usable functional programming lenses for JavaScript",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "lint": "eslint --config eslintrc.json ./*.js ./source/*.js ./test/*.js",
+    "test": "tape --require esm ./test/*.js"
+  },
+  "keywords": [
+    "functional",
+    "programming",
+    "data",
+    "structures",
+    "collections"
+  ],
+  "author": "Vijith Assar",
+  "license": "MIT",
+  "devDependencies": {
+    "esm": "^3.0.84",
+    "tape": "^4.9.1"
+  }
+}
