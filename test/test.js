@@ -130,3 +130,17 @@ test('composes setters with method references', t => {
   t.equal(data[0].value, 4)
   t.end()
 })
+
+
+test('returns the original structure after successfully setting', t => {
+  const nested = lens([0, 'values', 1])
+  const data = [
+    {values: [10, 20]},
+    {values: [30, 40]}
+  ]
+  const value = 50
+  const result = nested(data, value)
+  t.equal(data, result)
+  t.end()
+})
+

@@ -39,7 +39,7 @@ const lens = ([...args]) => {
       let key = keys.pop()
       try {
         current[key] = value
-        return true
+        return structure
       } catch (error) {
         console.error(error)
         return
