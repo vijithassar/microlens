@@ -3,8 +3,7 @@ const lens = ([...args]) => {
   let immutable = noop
   const get = structure => {
     if (typeof structure === 'undefined') {
-      console.error('get function requires structure as first argument')
-      return false
+      throw new Error('get function requires structure as first argument')
     }
     try {
       return args.reduce((previous, current) => {
@@ -12,17 +11,17 @@ const lens = ([...args]) => {
       }, structure)
     } catch (error) {
       console.error(error)
-      return false
+      return
     }
   }
   const set = (structure, value) => {
     if (typeof structure === 'undefined') {
       console.error('set function requires structure as first argument')
-      return false
+      return
     }
     if (typeof value === 'undefined') {
       console.error('set function requires value as second argument')
-      return false
+      return
     }
     let current = structure
     let keys = args.slice().reverse()
@@ -34,7 +33,7 @@ const lens = ([...args]) => {
       }
     } catch (error) {
       console.error('could not find key ' + key)
-      return false
+      return
     }
     if (keys.length === 1) {
       let key = keys.pop()
@@ -42,8 +41,8 @@ const lens = ([...args]) => {
         current[key] = value
         return true
       } catch (error) {
-        console.error('could not find key ' + key)
-        return false
+        console.error(error)
+        return
       }
     }
   }
