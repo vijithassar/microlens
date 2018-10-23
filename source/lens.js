@@ -5,8 +5,20 @@ const lens = ([...args]) => {
     return args.reduce((previous, current) => {
       return previous[current]
     }, structure)
+    if (typeof structure === 'undefined') {
+      console.error('get function requires structure as first argument')
+      return false
+    }
   }
   const set = (structure, value) => {
+    if (typeof structure === 'undefined') {
+      console.error('set function requires structure as first argument')
+      return false
+    }
+    if (typeof value === 'undefined') {
+      console.error('set function requires value as second argument')
+      return false
+    }
     let current = structure
     let keys = args.slice().reverse()
     let key
