@@ -49,9 +49,9 @@ const lens = ([...args]) => {
   const fn = function(structure, value) {
     const value_provided = typeof value !== 'undefined'
     if (! value_provided) {
-      return immutable(get(structure))
+      return get(structure)
     } else if (value_provided) {
-      return set(structure, value)
+      return immutable(set(structure, value))
     }
   }
   const set_immutable = _ => {
