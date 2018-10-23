@@ -2,11 +2,16 @@ const lens = ([...args]) => {
   const noop = _ => _
   let immutable = noop
   const get = structure => {
-    return args.reduce((previous, current) => {
-      return previous[current]
-    }, structure)
     if (typeof structure === 'undefined') {
       console.error('get function requires structure as first argument')
+      return false
+    }
+    try {
+      return args.reduce((previous, current) => {
+        return previous[current]
+      }, structure)
+    } catch (error) {
+      console.error(error)
       return false
     }
   }
