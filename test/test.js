@@ -146,8 +146,7 @@ test('returns the original structure after successfully setting', t => {
 test('injects immutability function', t => {
   const value = 4
   const hook = () => value
-  const first = lens([0])
-  first.immutable(hook)
+  const first = lens([0], hook)
   const data = [1, 2, 3]
   const result = first(data, 1)
   t.equal(result, value)
@@ -156,8 +155,7 @@ test('injects immutability function', t => {
 
 test('uses immutability function', t => {
   const immutable = input => JSON.parse(JSON.stringify(input))
-  const first = lens([0])
-  first.immutable(immutable)
+  const first = lens([0], immutable)
   const data = [1, 2, 3]
   const before = JSON.stringify(data)
   const result = first(data, 1)

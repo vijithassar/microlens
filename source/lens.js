@@ -1,6 +1,6 @@
-const lens = ([...args]) => {
-  const noop = _ => _
-  let immutable = noop
+const noop = _ => _
+
+const lens = ([...args], immutable = noop) => {
   const get = structure => {
     if (typeof structure === 'undefined') {
       throw new Error('get function requires structure as first argument')
@@ -58,14 +58,8 @@ const lens = ([...args]) => {
       return immutable(set(structure, value))
     }
   }
-  const set_immutable = _ => {
-    if (typeof _ === 'function') {
-      immutable = _
-    }
-  }
   Object.defineProperty(fn, 'get', {value: get})
   Object.defineProperty(fn, 'set', {value: set})
-  Object.defineProperty(fn, 'immutable', {value: set_immutable})
   return fn
 }
 
