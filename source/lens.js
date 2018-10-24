@@ -32,7 +32,8 @@ const lens = ([...args]) => {
         current = current[key]
       }
     } catch (error) {
-      console.error('could not find key ' + key)
+      console.error('could not find key ' + key + ' while traversing input data structure')
+      console.error(error)
       return
     }
     if (keys.length === 1) {
