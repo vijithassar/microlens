@@ -2,11 +2,13 @@
   "name": "microlens",
   "version": "0.1.0",
   "description": "usable functional programming lenses for JavaScript",
-  "main": "index.js",
+  "main": "build/microlens.min.js",
+  "module": "./index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
+    "build": "rollup --config",
     "lint": "eslint --config eslintrc.json ./*.js ./source/*.js ./test/*.js",
     "test": "tape --require esm ./test/*.js"
   },
@@ -22,6 +24,7 @@
   "devDependencies": {
     "eslint": "^5.7.0",
     "esm": "^3.0.84",
+    "rollup": "^0.66.6",
     "tape": "^4.9.1"
   }
 }
