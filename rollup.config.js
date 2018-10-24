@@ -1,4 +1,5 @@
 import buble from 'rollup-plugin-buble'
+import { uglify } from 'rollup-plugin-uglify'
 
 const config = {
   input: "./index.js",
@@ -9,7 +10,8 @@ const config = {
     sourcemap: true
   },
   plugins: [
-    buble()
+    buble(),
+    uglify()
   ]
 }
 
