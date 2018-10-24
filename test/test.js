@@ -165,3 +165,55 @@ test('composition helper applies immutability function', t => {
   t.notEqual(set, data)
   t.end()
 })
+
+test('gets complex types', t => {
+  const data = [
+    () => 1,
+    new Date()
+  ]
+  const first = lens([0])
+  const second = lens([1])
+  t.equal(typeof first(data), 'function')
+  t.equal(first(data)(), 1)
+  t.equal(typeof second(data), 'object')
+  t.equal(typeof second(data).getFullYear, 'function')
+  t.end()
+})
+
+test('sets complex types', t => {
+  const data = [1, 2, 3]
+  const value = 4
+  const fn = () => value
+  const first = lens([0])
+  const second = lens([1])
+  first(data, fn)
+  second(data, new Date())
+  t.equal(typeof first(data), 'function')
+  t.equal(first(data)(), value)
+  t.equal(typeof second(data), 'object')
+  t.equal(typeof second(data).getFullYear, 'function')
+  t.end()
+})
+
+test('sets values on complex types', t => {
+  const data = new Date()
+  const modified = lens(['modified'])
+  modified(data, true)
+  t.equal(modified(data), true)
+  t.equal(data.modified, true)
+  t.end()
+})
+
+test('applies immutability function to complex types', t => {
+  const immutable = date => new Date(date.getTime())
+  const modified = lens(['modified'], immutable)
+  const data = new Date()
+  const result = modified(data, true)
+  t.notEqual(data, result)
+  t.equal(data[0], result[0])
+  t.equal(data.modified, true)
+  t.equal(modified(data), true)
+  t.equal(typeof result.modified, 'undefined')
+  t.equal(typeof modified(result), 'undefined')
+  t.end()
+})
