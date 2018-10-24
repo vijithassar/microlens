@@ -48,52 +48,10 @@ test('sets nested values', t => {
   t.end()
 })
 
-test('exposes getter function as method', t => {
-  const first = lens([0])
-  t.equal(typeof first.get, 'function')
-  t.end()
-})
-
-test('getter method matches default behavior', t => {
-  const first = lens([0])
-  const data = [[], [], []]
-  t.equal(first.get(data), first(data))
-  t.end()
-})
-
-test('exposes setter function as method', t => {
-  const first = lens([0])
-  t.equal(typeof first.set, 'function')
-  t.end()
-})
-
-
-test('setter method matches default behavior', t => {
-  const first = lens([0])
-  const data = [[], [], []]
-  const value = []
-  first.set(data, value)
-  t.equal(value, first(data))
-  t.end()
-})
-
 test('composes getters with main function', t => {
   const value = lens(['value'])
   const first = lens([0])
   const first_value = _ => value(first(_))
-  const data = [
-    {value: 3},
-    {value: 4},
-    {value: 5}
-  ]
-  t.equal(first_value(data), 3)
-  t.end()
-})
-
-test('composes getters with method reference', t => {
-  const value = lens(['value'])
-  const first = lens([0])
-  const first_value = _ => value.get(first.get(_))
   const data = [
     {value: 3},
     {value: 4},
@@ -114,20 +72,6 @@ test('composes setters', t => {
   ]
   first_value(data, 4)
   t.equal(first_value(data), 4)
-  t.end()
-})
-
-test('composes setters with method references', t => {
-  const value = lens(['value'])
-  const first = lens([0])
-  const first_value = (structure, input) => value.set(first.get(structure), input)
-  const data = [
-    {value: 3},
-    {value: 4},
-    {value: 5}
-  ]
-  first_value(data, 4)
-  t.equal(data[0].value, 4)
   t.end()
 })
 

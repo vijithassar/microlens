@@ -58,8 +58,6 @@ const lens = ([...args], immutable = noop) => {
       return immutable(set(structure, value))
     }
   }
-  Object.defineProperty(fn, 'get', {value: get})
-  Object.defineProperty(fn, 'set', {value: set})
   return fn
 }
 
