@@ -49,7 +49,7 @@ test('sets nested values', t => {
   t.end()
 })
 
-test('composes getters with main function', t => {
+test('composes getters manually', t => {
   const value = lens(['value'])
   const first = lens([0])
   const first_value = _ => value(first(_))
@@ -62,7 +62,7 @@ test('composes getters with main function', t => {
   t.end()
 })
 
-test('composes setters', t => {
+test('composes setters manually', t => {
   const value = lens(['value'])
   const first = lens([0])
   const first_value = (structure, input) => value(first(structure), input)
