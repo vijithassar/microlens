@@ -131,7 +131,6 @@ test('composes setters with method references', t => {
   t.end()
 })
 
-
 test('returns the original structure after successfully setting', t => {
   const nested = lens([0, 'values', 1])
   const data = [
@@ -165,5 +164,16 @@ test('uses immutability function', t => {
   const after = JSON.stringify(result)
   t.equal(before, after)
   t.notEqual(data, result)
+  t.end()
+})
+
+test('adds keys as necessary during a set operation', t => {
+  const name = 'john'
+  const data = [{}, {}, {}]
+  const target = lens([0, 'name', 'first'])
+  target(data, name)
+  const result = target(data)
+  t.equal(result, name)
+  t.equal(data[0].name.first, name)
   t.end()
 })
