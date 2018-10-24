@@ -25,26 +25,29 @@ const lens = ([...args]) => {
     }
     let current = structure
     let keys = args.slice().reverse()
-    let key
     try {
-      while (keys.length > 1) {
-        key = keys.pop()
-        current = current[key]
+      while (keys.length > 0) {
+        let key = keys.pop()
+        let integer = Number.isInteger(key)
+        let last = keys.length === 0
+        if (! current[key]) {
+          if (integer) {
+            current[key] = []
+          } else {
+            current[key] = {}
+          }
+        }
+        if (last) {
+          current[key] = value
+          return structure
+        } else {
+          current = current[key]
+        }
       }
     } catch (error) {
-      console.error('could not find key ' + key + ' while traversing input data structure')
+      console.error('could not find expected key while traversing input data structure')
       console.error(error)
       return
-    }
-    if (keys.length === 1) {
-      let key = keys.pop()
-      try {
-        current[key] = value
-        return structure
-      } catch (error) {
-        console.error(error)
-        return
-      }
     }
   }
   const fn = function(structure, value) {
