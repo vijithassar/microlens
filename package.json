@@ -25,6 +25,7 @@
     "eslint": "^5.7.0",
     "esm": "^3.0.84",
     "rollup": "^0.66.6",
+    "rollup-plugin-buble": "^0.19.4",
     "tape": "^4.9.1"
   }
 }
