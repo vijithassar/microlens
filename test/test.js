@@ -1,5 +1,6 @@
 import { test } from 'tape'
 import { lens } from '../'
+import { compose } from '../source/compose'
 
 test('exports a function', t => {
   t.equal(typeof lens, 'function')
@@ -117,5 +118,35 @@ test('adds keys as necessary during a set operation', t => {
   const result = target(data)
   t.equal(result, name)
   t.equal(data[0].name.first, name)
+  t.end()
+})
+
+test('composition helper gets values', t => {
+  const first = lens([0])
+  const value = lens(['value'])
+  const first_value = compose([first, value])
+  const data = [{value: 2}, {}, {}]
+  t.equal(first_value(data), 2)
+  t.end()
+})
+
+test('composition helper sets values', t => {
+  const first = lens([0])
+  const value = lens(['value'])
+  const first_value = compose([first, value])
+  const data = [{value: 2}, {}, {}]
+  first_value(data, 3)
+  t.equal(first_value(data), 3)
+  t.equal(data[0].value, 3)
+  t.end()
+})
+
+test('composition helper returns the original structure after successfully setting', t => {
+  const first = lens([0])
+  const value = lens(['value'])
+  const first_value = compose([first, value])
+  const data = [{value: 2}, {}, {}]
+  const set = first_value(data, 3)
+  t.equal(set, data)
   t.end()
 })
