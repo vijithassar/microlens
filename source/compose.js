@@ -11,7 +11,7 @@ const compose = lenses => {
           return current(previous(structure))
         } else if (arguments.length === 2) {
           current(previous(structure), value)
-          return structure
+          return previous(structure, previous(structure))
         }
       }
       return fn

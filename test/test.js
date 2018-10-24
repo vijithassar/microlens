@@ -150,3 +150,18 @@ test('composition helper returns the original structure after successfully setti
   t.equal(set, data)
   t.end()
 })
+
+test('composition helper applies immutability function', t => {
+  const immutable = input => JSON.parse(JSON.stringify(input))
+  const first = lens([0], immutable)
+  const value = lens(['value'])
+  const first_value = compose([first, value])
+  const data = [{value: 2}, {}, {}]
+  const before = JSON.stringify(data)
+  const set = first_value(data, 3)
+  const reset = first_value(data, 2)
+  const after = JSON.stringify(reset)
+  t.equal(before, after)
+  t.notEqual(set, data)
+  t.end()
+})
