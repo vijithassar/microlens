@@ -52,7 +52,7 @@ import the module into your JavaScript file:
 
 ```javascript
 // as ES6 module
-import { lens } from 'minilens'
+import { lens } from 'microlens'
 
 // or
 
