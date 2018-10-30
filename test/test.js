@@ -84,6 +84,24 @@ test('composes setters manually', t => {
   t.end()
 })
 
+test('composes hybrid getter/setters manually', t => {
+  const value = lens(['value'])
+  const first = lens([0])
+  const new_value = 4
+  const first_value = function(structure, input) {
+    return arguments[1] ? value(first(structure), input) : value(first(structure))
+  }
+  const data = [
+    {value: 3},
+    {value: 4},
+    {value: 5}
+  ]
+  first_value(data, new_value)
+  t.equal(first_value(data), new_value)
+  t.equal(data[0].value, new_value)
+  t.end()
+})
+
 test('returns the original structure after successfully setting', t => {
   const nested = lens([0, 'values', 1])
   const data = [
