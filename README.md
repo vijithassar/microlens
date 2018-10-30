@@ -244,3 +244,5 @@ const lenses = [topGame, topPlayer, country]
 // compose the new lens
 const composition = compose(lenses)
 ```
+
+The composition helper function has been thoroughly annotated so it can serve as effective documentation if you'd like to implement your own bespoke composition logic.
