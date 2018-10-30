@@ -41,7 +41,7 @@ first_link(user, "https://www.example.com/document/2378432")
 
 # Installation
 
-install the package from npm:
+install the package from the npm command line:
 
 ```bash
 # install microlens package
@@ -225,51 +225,16 @@ Good luck!
 
 # Composing Lenses
 
-Lenses are just functions so you can compose them however you like! However, there are some tricks and edge cases to consider...
+Lenses are just functions, so you can compose them!
 
-## Composing Manually
-
-*inline, on the fly, etc...*
-
-### Getters
-
-If you just need a composed *getter*, there's really no reason not to just whip up a quick lil inline thing with a one-line arrow function:
+You can compose lenses manually if you want to tap into the logic along the way to add additional control flow or tooling. If you're only using your lenses as getters, this can be done with a one-line arrow function:
 
 ```javascript
-// get the country of residence of the top
-// ranked player of the top selling video game
-const topGameTopPlayerCountry = data => country(topPlayer(topGame(data)))
+// quickly compose several lenses into a getter
+const topUserCountry = input => userCountry(topUser(input)))
 ```
 
-Note that here the *broadest* lens function which operates at the *outer* levels of the data structure is located at the *inside* of the composition.
-
-### Setters
-
-For a composed *setter*, note that you only need to pass the value once, at the outermost layer of the composition, because the rest of the functions are just *looking up* the location in the data structure at which you want to write that value. Don't worry, it's still pretty short:
-
-```javascript
-// get the country of residence of the top
-// ranked player of the top selling video game
-const topGameTopPlayerCountry = (data, value) => country(topPlayer(topGame(data)), value)
-```
-
-The usual return value of a lens function set operation is to return the data structure with the new value. If you are whipping up lil inline compositions and need to ensure that behavior remains consistent, you can use parentheses and a comma to explicitly return the input data structure, and it will still probably fit on one line:
-
-```javascript
-// get the country of residence of the top
-// ranked player of the top selling video game
-// and return the data structure from the
-// composed lens as per usual lens behavior
-const topGameTopPlayerCountry = (data, value) => (country(topPlayer(topGame(data)), value), structure)
-```
-
-### Immutability
-
-If you need immutable data returned from your compositions, you'll probably want to use the composition helper function instead of throwing together one-liners on the fly.
-
-### Composition Helper Function
-
-Inline lens composition works just fine as described above, but microlens also supplies an optional composition helper function which handles all the edge cases *and* enforces any immutability you have configured. To use it, just pass it an array of lenses. The array should read from left to right, with the most general lens that operates first listed first in the array. Your composed lens will be immutable if that broadest lens listed in the array is immutable (`topGame()`, in this example).
+To compose lenses for use as setters or with immutable data, microlens supplies an optional composition helper function which `<FAMOUS LAST WORDS>` handles all the edge cases `</FAMOUS LAST WORDS>` and will be preferable in most cases. To use the composition helper, just pass it an array of lenses. The array should read from left to right, with the most general lens that operates first listed first in the array. Your composed lens will be immutable if that broadest lens listed in the array is immutable (`topGame()`, in this example).
 
 ```javascript
 // import the composition helper function
@@ -278,3 +243,4 @@ import { compose } from 'microlens'
 const lenses = [topGame, topPlayer, country]
 // compose the new lens
 const composition = compose(lenses)
+```
