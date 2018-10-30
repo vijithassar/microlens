@@ -136,6 +136,18 @@ test('uses immutability function', t => {
   t.end()
 })
 
+test('leaves original data structure when invoking immutability function', t => {
+  const immutable = input => JSON.parse(JSON.stringify(input))
+  const first = lens([0], immutable)
+  const data = [1, 2, 3]
+  const before = JSON.stringify(data)
+  const result = first(data, 2)
+  const after = JSON.stringify(result)
+  t.notEqual(before, after)
+  t.equal(JSON.stringify(data), before)
+  t.end()
+})
+
 test('adds keys as necessary during a set operation', t => {
   const name = 'john'
   const data = [{}, {}, {}]
