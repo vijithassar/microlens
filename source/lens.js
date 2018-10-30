@@ -14,12 +14,12 @@ const lens = ([...args], immutable = noop) => {
       return
     }
   }
-  const set = (structure, value) => {
+  const set = function(structure, value) {
     if (typeof structure === 'undefined') {
       console.error('set function requires structure as first argument')
       return
     }
-    if (typeof value === 'undefined') {
+    if (arguments.length === 1) {
       console.error('set function requires value as second argument')
       return
     }
@@ -51,10 +51,10 @@ const lens = ([...args], immutable = noop) => {
     }
   }
   const fn = function(structure, value) {
-    const value_provided = typeof value !== 'undefined'
+    const value_provided = arguments.length === 2
     if (! value_provided) {
       return get(structure)
-    } else if (value_provided) {
+    } else {
       return immutable(set(structure, value))
     }
   }

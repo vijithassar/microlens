@@ -49,6 +49,14 @@ test('sets nested values', t => {
   t.end()
 })
 
+test('sets values to undefined', t => {
+  const first = lens([0])
+  const data = [1, 2, 3]
+  first(data, void 0)
+  t.equal(typeof first(data), 'undefined')
+  t.end()
+})
+
 test('composes getters manually', t => {
   const value = lens(['value'])
   const first = lens([0])
@@ -72,7 +80,7 @@ test('composes setters manually', t => {
     {value: 5}
   ]
   first_value(data, 4)
-  t.equal(first_value(data), 4)
+  t.equal(data[0].value, 4)
   t.end()
 })
 
