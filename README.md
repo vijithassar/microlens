@@ -205,7 +205,7 @@ To force a lens to return a copy of your input data structure without mutating t
 ```javascript
 // create a copy of the data by casting it to a JSON
 // string and then immediately parsing that string
-const copy = data => JSON.parse(JSON.stringify(data)
+const copy = data => JSON.parse(JSON.stringify(data))
 
 // supply the function to copy data to the lens creation function
 const favoriteFoodImmutable = lens(['foods', 'favorites', 0], copy)
