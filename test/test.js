@@ -115,12 +115,13 @@ test('returns the original structure after successfully setting', t => {
 })
 
 test('injects copy function', t => {
-  const value = 4
-  const hook = () => value
+  const hook = () => [4, 4]
   const first = lens([0], hook)
   const data = [1, 2, 3]
   const result = first(data, 1)
-  t.equal(result, value)
+  t.equal(result[0], 1)
+  t.equal(result[1], 4)
+  t.equal(first(result), 1)
   t.end()
 })
 
