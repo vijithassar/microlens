@@ -200,18 +200,18 @@ The return value of a set operation is the original data structure with the new 
 
 Functional programming in JavaScript is delightful, but even though functional programming prefers immutable data structures, in JavaScript the data is often only treated as immutable *by convention*, because deep cloning of nested data structures is hard, `Object.freeze()` is shallow, and so on. Enforcing true immutability is beyond the scope of a lens library like this one, but if you have a solution for immutable data that works for your use case, you can *attach* it to any lenses you can create, in which case it will be run at the end after setting a value so as to return an immutable copy of the input data, however you've defined "immutable" in your project.
 
-To force a lens to return immutable data, provide the lens creation function with a second parameter, which is a function for taking input data and returning an immutable copy of it:
+To force a lens to return a copy of your input data structure without mutating the original, provide the lens creation function with a second parameter, which is a function for taking input data and returning a copy of it:
 
 ```javascript
-// create an immutable copy by casting the data structure
-// to a string and then immediately parsing that string
-const immutable = data => JSON.parse(JSON.stringify(data)
+// create a copy of the data by casting it to a JSON
+// string and then immediately parsing that string
+const copy = data => JSON.parse(JSON.stringify(data)
 
 // supply the function to copy data to the lens creation function
-const favoriteFoodImmutable = lens(['foods', 'favorites', 0], immutable)
+const favoriteFoodImmutable = lens(['foods', 'favorites', 0], copy)
 ```
 
-Some of your options for enforcing immutability include:
+Some of your options for deep copying and immutability include:
 
 - `JSON.stringify()` to encode and parse data as a serialized string
 - `Array.prototype.slice()` for shallow copying of arrays
@@ -234,7 +234,7 @@ You can compose lenses manually if you want to tap into the logic along the way 
 const topUserCountry = input => userCountry(topUser(input)))
 ```
 
-To compose lenses for use as setters or with immutable data, microlens supplies an optional composition helper function which `<FAMOUS LAST WORDS>` handles all the edge cases `</FAMOUS LAST WORDS>` and will be preferable in most cases. To use the composition helper, just pass it an array of lenses. The array should read from left to right, with the most general lens that operates first listed first in the array. Your composed lens will be immutable if that broadest lens listed in the array is immutable (`topGame()`, in this example).
+To compose lenses for use as setters or with immutable data, microlens supplies an optional composition helper function which `<FAMOUS LAST WORDS>` handles all the edge cases `</FAMOUS LAST WORDS>` and will be easier than manual composition in most cases. To use the composition helper, just pass it an array of lenses. The array should read from left to right, with the most general lens that operates first listed first in the array. Your composed lens will be immutable if that broadest lens listed first in the array (`topGame()`, in this example) was created with a data copying function.
 
 ```javascript
 // import the composition helper function
@@ -245,4 +245,4 @@ const lenses = [topGame, topPlayer, country]
 const composition = compose(lenses)
 ```
 
-The composition helper function has been thoroughly annotated so it can serve as effective documentation if you'd like to implement your own bespoke composition logic.
+The composition helper function has been [thoroughly annotated](./source/compose.js) so it can serve as effective documentation if you'd like to implement your own bespoke composition logic.

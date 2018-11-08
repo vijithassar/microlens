@@ -114,7 +114,7 @@ test('returns the original structure after successfully setting', t => {
   t.end()
 })
 
-test('injects immutability function', t => {
+test('injects copy function', t => {
   const value = 4
   const hook = () => value
   const first = lens([0], hook)
@@ -124,9 +124,9 @@ test('injects immutability function', t => {
   t.end()
 })
 
-test('uses immutability function', t => {
-  const immutable = input => JSON.parse(JSON.stringify(input))
-  const first = lens([0], immutable)
+test('uses copy function', t => {
+  const copy = input => JSON.parse(JSON.stringify(input))
+  const first = lens([0], copy)
   const data = [1, 2, 3]
   const before = JSON.stringify(data)
   const result = first(data, 1)
@@ -136,9 +136,9 @@ test('uses immutability function', t => {
   t.end()
 })
 
-test('leaves original data structure when invoking immutability function', t => {
-  const immutable = input => JSON.parse(JSON.stringify(input))
-  const first = lens([0], immutable)
+test('leaves original data structure when invoking copy function', t => {
+  const copy = input => JSON.parse(JSON.stringify(input))
+  const first = lens([0], copy)
   const data = [1, 2, 3]
   const before = JSON.stringify(data)
   const result = first(data, 2)
@@ -189,9 +189,9 @@ test('composition helper returns the original structure after successfully setti
   t.end()
 })
 
-test('composition helper applies immutability function', t => {
-  const immutable = input => JSON.parse(JSON.stringify(input))
-  const first = lens([0], immutable)
+test('composition helper applies copy function', t => {
+  const copy = input => JSON.parse(JSON.stringify(input))
+  const first = lens([0], copy)
   const value = lens(['value'])
   const first_value = compose([first, value])
   const data = [{value: 2}, {}, {}]
@@ -242,9 +242,9 @@ test('sets values on complex types', t => {
   t.end()
 })
 
-test('applies immutability function to complex types', t => {
-  const immutable = date => new Date(date.getTime())
-  const modified = lens(['modified'], immutable)
+test('applies copy function to complex types', t => {
+  const copy = date => new Date(date.getTime())
+  const modified = lens(['modified'], copy)
   const data = new Date()
   const result = modified(data, true)
   t.notEqual(data, result)

@@ -1,6 +1,6 @@
 const noop = _ => _
 
-const lens = ([...args], immutable = noop) => {
+const lens = ([...args], copy = noop) => {
   const get = structure => {
     if (typeof structure === 'undefined') {
       throw new Error('get function requires structure as first argument')
@@ -55,7 +55,7 @@ const lens = ([...args], immutable = noop) => {
     if (! value_provided) {
       return get(structure)
     } else {
-      return immutable(set(structure, value))
+      return copy(set(structure, value))
     }
   }
   return fn
