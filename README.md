@@ -41,7 +41,7 @@ first_link(user, "https://www.example.com/document/2378432")
 
 # Installation
 
-install the package from the npm command line:
+install the package from [npm](https://www.npmjs.org/package/microlens):
 
 ```bash
 # install microlens package
@@ -62,7 +62,7 @@ const lens = require('microlens').lens
 
 # But Why Tho
 
-Have you ever needed to work with a data structure -- maybe a response from a JSON API -- that includes a lot of extra stuff you don't need?
+Have you ever needed to work with a data structure — maybe a response from a JSON API — that includes a lot of extra stuff you don't need?
 
 Perhaps you feel the urge to quickly transform it before you pass it to the rest of your program:
 
@@ -214,6 +214,7 @@ const favoriteFoodImmutable = lens(['foods', 'favorites', 0], copy)
 Some of your options for deep copying and immutability include:
 
 - `JSON.stringify()` to encode and parse data as a serialized string
+- [structured clone](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm)
 - `Array.prototype.slice()` for shallow copying of arrays
 - `_.clone()` from [Underscore](https://underscorejs.org/#clone)
 - `_.cloneDeep()` from [lodash](https://lodash.com/docs/4.17.10#cloneDeep)
@@ -227,7 +228,7 @@ Good luck!
 
 Lenses are just functions, so you can compose them!
 
-You can compose lenses manually if you want to tap into the logic along the way to add additional control flow or tooling. If you're only using your lenses as getters, this can be done with a one-line arrow function:
+If you're only using your lenses as getters, this can be done with a one-line arrow function:
 
 ```javascript
 // quickly compose several lenses into a getter
