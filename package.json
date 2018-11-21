@@ -10,7 +10,8 @@
   "scripts": {
     "build": "rollup --config",
     "lint": "eslint --config eslintrc.json ./*.js ./source/*.js ./test/*.js",
-    "test": "tape --require esm ./test/*.js"
+    "test": "tape --require esm ./test/*.js",
+    "prepublish": "npm run build && npm run lint && npm run test"
   },
   "keywords": [
     "functional",
