@@ -1,7 +1,7 @@
 {
   "name": "microlens",
   "version": "0.1.0",
-  "description": "usable functional programming lenses for JavaScript",
+  "description": "functional lenses for traversing data structures in JavaScript",
   "main": "build/microlens.min.js",
   "module": "./index.js",
   "directories": {
@@ -13,6 +13,10 @@
     "test": "tape --require esm ./test/*.js",
     "prepublish": "npm run build && npm run lint && npm run test"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vijithassar/microlens.git"
+  },
   "keywords": [
     "functional",
     "programming",
@@ -20,7 +24,11 @@
     "structures",
     "collections"
   ],
-  "author": "Vijith Assar",
+  "author": {
+    "name": "Vijith Assar",
+    "email": "github@vijithassar.com",
+    "url": "http://www.vijithassar.com"
+  },
   "license": "MIT",
   "devDependencies": {
     "eslint": "^5.7.0",
