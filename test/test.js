@@ -1,6 +1,5 @@
 import { test } from 'tape'
-import { lens } from '../'
-import { compose } from '../source/compose'
+import { lens, compose, copy } from '../'
 
 test('exports a function', t => {
   t.equal(typeof lens, 'function')
@@ -253,5 +252,22 @@ test('applies copy function to complex types', t => {
   t.equal(typeof data.modified, 'undefined')
   t.equal(modified(result), true)
   t.equal(typeof data, typeof result)
+  t.end()
+})
+
+test('uses structural sharing when using provided copy function', t => {
+  const data = {
+    a: { b: { c: 1 }, d: {} },
+    e: { f: {} }
+  };
+  const c = lens(['a', 'b', 'c'], copy)
+  const before = JSON.stringify(data)
+  const result = c(data, 2)
+  const after = JSON.stringify(result)
+  t.notEqual(before, after)
+  t.equal(data.a.b.c, 1);
+  t.equal(result.a.b.c, 2);
+  t.equal(result.e, data.e)
+  t.equal(result.a.d, data.a.d)
   t.end()
 })

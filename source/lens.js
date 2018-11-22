@@ -55,7 +55,7 @@ const lens = ([...args], copy = noop) => {
     if (! value_provided) {
       return get(structure)
     } else {
-      return set(copy(structure), value)
+      return set(copy(structure, args.slice()), value)
     }
   }
   return fn
