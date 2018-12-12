@@ -1,6 +1,6 @@
 {
   "name": "microlens",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "functional lenses for traversing data structures in JavaScript",
   "main": "build/microlens.min.js",
   "module": "./index.js",

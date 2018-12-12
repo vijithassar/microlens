@@ -28,15 +28,15 @@ Create a handy accessor function for reading from and writing to it:
 ```javascript
 // create a lens function by supplying keys for
 // traversing the data object
-const first_link = lens(['user_info', 'links', 0])
+const firstLink = lens(['user_info', 'links', 0])
 
 // get the existing value
-first_link(user) // returns "https://www.example.com/document/8723498"
+firstLink(user) // returns "https://www.example.com/document/8723498"
 
 // set a new value; will create objects and arrays
 // as necessary to satisfy traversal path without
 // requiring any existential checks
-first_link(user, "https://www.example.com/document/2378432")
+firstLink(user, "https://www.example.com/document/2378432")
 ```
 
 # Installation
@@ -87,7 +87,9 @@ const firstUserHomepageUrl = data.users[0].links.homepage.url
 renderLink(firstUserHomepageUrl)
 ```
 
-This approach is also problematic because it **couples your application logic to the data structure**, which means your program will break if anything changes with the incoming data. In the example above, the `renderLink()` function doesn't *really* care about the JSON structure, but it is likely to break because the structure of the data being stored hasn't really been decoupled from the application logic. This makes things brittle, and especially so if you have to look up the same nested accessors repeatedly. If you need to get that homepage URL more than once, you'll need to use that gross string of keys several times, each of which will separately break if the incoming data structure ever changes.
+This approach is also problematic because it **couples your application logic to the data structure**, which means your program will break if anything changes with the incoming data.
+
+In the example above, the `renderLink()` function doesn't *really* care about the JSON structure, but it is likely to break because the structure of the data being stored hasn't really been decoupled from the application logic. This makes things brittle, and especially so if you have to look up the same nested accessors repeatedly. If you need to get that homepage URL more than once, you'll need to use that gross string of keys several times, each of which will separately break if the incoming data structure ever changes.
 
 There is a better way to do this!
 
@@ -126,7 +128,7 @@ Lenses work both ways, and can also be used as **setters**:
 
 ```javascript
 // here comes a new challenger!
-topUserCountry(tetrisPlayers, newTetrisChampion)
+topUser(tetrisPlayers, newTetrisChampion)
 ```
 
 microlens assumes that you are confident in the traversal path across the data structure you specified with keys when creating your lens function, and will follow it in order to set values even if empty objects and arrays have to be created along the way in order to adhere to it. This means the data structures will be **consistent**. (If you are not confident in the traversal path specified by the keys, you may want to consider a different solution.)
